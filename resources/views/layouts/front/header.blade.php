@@ -1,13 +1,13 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="#">AdminDocs</a>
+            <a class="navbar-brand" href="{{ url('/') }}">AdminDocs</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('/') }}"Accueil</a>
+                        <a class="nav-link active" href="{{ url('/') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/requests') }}">Faire une demande</a>
@@ -18,7 +18,7 @@
                 </ul>
                 <div class="d-flex">
                     <a href="{{ url('/connexion') }}" class="btn btn-light me-2">Connexion</a>
-                    <a href="" class="btn btn-outline-light">Inscription</a>
+                    <a href="" class="{{ url('/') }}">Inscription</a>
                 </div>
             </div>
         </div>
