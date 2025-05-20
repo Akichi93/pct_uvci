@@ -12,8 +12,8 @@
                             <select class="form-select" id="documentType" required>
                                 <option value="" selected disabled>Choisissez un document</option>
                                 <option value="attestation">Attestation de domicile</option>
-                                <option value="carte-identite">Demande de carte d'identité</option>
-                                <option value="passeport">Demande de passeport</option>
+                                <option value="legalisation">Legalisation de document</option>
+                                <option value="mariage">Demande de certificat de mariage</option>
                                 <option value="extrait-acte">Extrait d'acte de naissance</option>
                                 <option value="certificat">Certificat de célibat</option>
                             </select>

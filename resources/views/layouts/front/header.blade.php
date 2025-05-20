@@ -18,7 +18,7 @@
                 </ul>
                 <div class="d-flex">
                     <a href="{{ url('/connexion') }}" class="btn btn-light me-2">Connexion</a>
-                    <a href="" class="{{ url('/') }}">Inscription</a>
+                    <a href="{{ url('/inscription') }}" class="btn btn-light me-2">Inscription</a>
                 </div>
             </div>
         </div>

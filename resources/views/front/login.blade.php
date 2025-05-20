@@ -7,10 +7,11 @@
                     <div class="card shadow">
                         <div class="card-body p-4">
                             <h2 class="card-title text-center mb-4">Connexion</h2>
-                            <form id="loginForm">
+                            <form id="loginForm" method="POST" action="{{ route('login') }}">
+                                @csrf
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" required>
+                                    <input type="email" class="form-control" id="email" required name="email" value="{{ old('email') }}" required autofocus>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Mot de passe</label>
@@ -28,7 +29,7 @@
                         </div>
                     </div>
                     <div class="text-center mt-3">
-                        <p>Pas encore de compte ? <a href="register.html">S'inscrire</a></p>
+                        <p>Pas encore de compte ? <a href="{{ url('/inscription') }}">S'inscrire</a></p>
                     </div>
                 </div>
             </div>

@@ -10,6 +10,10 @@ Route::get('/connexion', function () {
     return view('front.login');
 });
 
+Route::get('/inscription', function () {
+    return view('front.register');
+});
+
 Route::get('/requests', function () {
     return view('front.requests');
 });

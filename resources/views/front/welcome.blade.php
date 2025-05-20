@@ -4,7 +4,7 @@
         <div class="container text-center">
             <h1 class="display-4">Plateforme de Documents Administratifs</h1>
             <p class="lead">Gérez toutes vos demandes administratives en ligne</p>
-            <a href="demandes.html" class="btn btn-primary btn-lg mt-3">Faire une demande</a>
+            <a href="{{ url('/requests') }}" class="btn btn-primary btn-lg mt-3">Faire une demande</a>
         </div>
     </section>
 
