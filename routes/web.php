@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Front\HomeController;
+
+
+// Route::get('/', [HomeController::class, 'home']);
+// Route::get('/connexion', [HomeController::class, 'loginPage']);
 
 Route::get('/', function () {
     return view('front.welcome');
