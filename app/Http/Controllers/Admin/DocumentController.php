@@ -49,21 +49,21 @@ class DocumentController extends Controller
             'description' => 'required|string',
             'category' => 'required|string',
             'file' => 'required|file|mimes:pdf,doc,docx|max:2048',
-            'is_public' => 'boolean',
+            'status' => 'required|in:active,inactive',
+            'is_public' => 'sometimes|boolean',
         ]);
 
-        // Enregistrer le fichier
-        $filePath = $request->file('file')->store('documents', 'public');
+        // Gestion du fichier
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('documents', 'public');
+            $validated['file_path'] = $filePath;
+        }
 
-        // Créer le document
-        Document::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'category' => $request->category,
-            'file_path' => $filePath,
-            'is_public' => $request->has('is_public'),
-            'status' => 'active',
-        ]);
+        // Gestion du champ is_public qui est une checkbox
+        $validated['is_public'] = $request->has('is_public') ? true : false;
+
+        // Création du document
+        $document = Document::create($validated);
 
         return redirect()->route('admin.documents.index')
             ->with('success', 'Document créé avec succès.');
@@ -101,7 +101,7 @@ class DocumentController extends Controller
             'category' => 'required|string',
             'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             'is_public' => 'boolean',
-            'status' => 'required|in:active,archived',
+            'status' => 'required|in:active,inactive',
         ]);
 
         // Récupérer le document

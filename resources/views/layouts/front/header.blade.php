@@ -7,20 +7,25 @@
           <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav me-auto">
                   <li class="nav-item">
-                      <a class="nav-link active" href="{{ url('/') }}">Accueil</a>
+                      <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="{{ url('/') }}">Accueil</a>
+                  </li>
+                  @auth
+                  <li class="nav-item">
+                      <a class="nav-link {{ request()->is('requests*') ? 'active' : '' }}" href="{{ url('/requests') }}">Faire une demande</a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" href="{{ url('/requests') }}">Faire une demande</a>
+                      <a class="nav-link {{ request()->is('documents*') ? 'active' : '' }}" href="{{ route('documents.index') }}">Mes documents</a>
                   </li>
-                  <li class="nav-item">
-                      <a class="nav-link" href="{{ url('/documents') }}">Mes documents</a>
-                  </li>
+                  @endauth
               </ul>
               <div class="d-flex">
 
                   @if (Auth::check())
-                      <span class="navbar-text me-3">Bienvenue, Jean Dupont</span>
-                      <a href="#" class="btn btn-outline-light">Déconnexion</a>
+                      <span class="navbar-text me-3">Bienvenue, {{ Auth::user()->name }}</span>
+                      <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                          @csrf
+                          <button type="submit" class="btn btn-outline-light">Déconnexion</button>
+                      </form>
                   @else
                       <a href="{{ url('/connexion') }}" class="btn btn-light me-2">Connexion</a>
                       <a href="{{ url('/inscription') }}" class="btn btn-light me-2">Inscription</a>

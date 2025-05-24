@@ -7,38 +7,56 @@
                     <div class="card shadow">
                         <div class="card-body p-4">
                             <h2 class="card-title text-center mb-4">Créer un compte</h2>
-                            <form id="registerForm">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                            <form id="registerForm" method="POST" action="{{ url('/register') }}">
+                                @csrf
                                 <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label for="firstName" class="form-label">Prénom</label>
-                                        <input type="text" class="form-control" id="firstName" required>
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label for="lastName" class="form-label">Nom</label>
-                                        <input type="text" class="form-control" id="lastName" required>
+                                    <div class="col-md-12 mb-3">
+                                        <label for="name" class="form-label">Nom complet</label>
+                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required autofocus>
+                                        @error('name')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" required>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
                                     <div class="form-text">Nous ne partagerons jamais votre email.</div>
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="phone" class="form-label">Téléphone</label>
-                                    <input type="tel" class="form-control" id="phone">
+                                    <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone" name="phone" value="{{ old('phone') }}">
+                                    @error('phone')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="address" class="form-label">Adresse</label>
-                                    <textarea class="form-control" id="address" rows="2"></textarea>
+                                    <textarea class="form-control @error('address') is-invalid @enderror" id="address" name="address" rows="2">{{ old('address') }}</textarea>
+                                    @error('address')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="password" class="form-label">Mot de passe</label>
-                                        <input type="password" class="form-control" id="password" required>
+                                        <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
                                         <div class="password-strength mt-1">
                                             <div class="progress" style="height: 5px;">
                                                 <div class="progress-bar" id="passwordStrength" role="progressbar"
@@ -47,17 +65,20 @@
                                             <small id="passwordHelp" class="form-text text-muted">Le mot de passe doit
                                                 contenir au moins 8 caractères.</small>
                                         </div>
+                                        @error('password')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="col-md-6 mb-3">
-                                        <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
-                                        <input type="password" class="form-control" id="confirmPassword" required>
+                                        <label for="password-confirm" class="form-label">Confirmer le mot de passe</label>
+                                        <input type="password" class="form-control" id="password-confirm" name="password_confirmation" required>
                                         <div class="invalid-feedback" id="passwordError">Les mots de passe ne correspondent
                                             pas.</div>
                                     </div>
                                 </div>
 
                                 <div class="mb-3 form-check">
-                                    <input type="checkbox" class="form-check-input" id="terms" required>
+                                    <input type="checkbox" class="form-check-input" id="terms" name="terms" required>
                                     <label class="form-check-label" for="terms">J'accepte les <a href="#"
                                             data-bs-toggle="modal" data-bs-target="#termsModal">conditions
                                             d'utilisation</a></label>

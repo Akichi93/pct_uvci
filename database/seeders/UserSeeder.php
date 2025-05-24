@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'name' => 'Citoyen Test',
             'email' => 'citoyen@example.com',
             'password' => Hash::make('password'),
-            'role' => 'user',
+            'role' => 'citizen',
             'phone' => '+225 0123456788',
             'address' => 'Yamoussoukro, Côte d\'Ivoire',
         ]);

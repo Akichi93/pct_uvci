@@ -16,7 +16,7 @@ class CitizenRequestSeeder extends Seeder
     public function run(): void
     {
         // Récupérer les IDs des utilisateurs citoyens
-        $userIds = User::where('role', 'user')->pluck('id')->toArray();
+        $userIds = User::where('role', 'citizen')->pluck('id')->toArray();
 
         // Récupérer les IDs des documents
         $documentIds = Document::pluck('id')->toArray();
