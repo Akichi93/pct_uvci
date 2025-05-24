@@ -4,16 +4,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Front\HomeController;
 
 
-// Route::get('/', [HomeController::class, 'home']);
-// Route::get('/connexion', [HomeController::class, 'loginPage']);
+Route::get('/', [HomeController::class, 'home']);
+Route::get('/connexion', [HomeController::class, 'loginPage']);
 
-Route::get('/', function () {
-    return view('front.welcome');
-});
+// Route::get('/', function () {
+//     return view('front.welcome');
+// });
 
-Route::get('/connexion', function () {
-    return view('front.login');
-});
+// Route::get('/connexion', function () {
+//     return view('front.login');
+// });
 
 Route::get('/inscription', function () {
     return view('front.register');
