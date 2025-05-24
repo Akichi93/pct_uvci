@@ -6,7 +6,7 @@
             <div class="card shadow-sm">
                 <div class="card-body">
                     <h2 class="card-title">Tableau de bord</h2>
-                    <p class="card-text">Bienvenue {{ Auth::user()->name }} sur votre espace personnel.</p>
+                    <p class="card-text">Bienvenue {{ Auth::user()->nom }} {{ Auth::user()->prenoms }} sur votre espace personnel.</p>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
-                            <strong>Nom :</strong> {{ Auth::user()->name }}
+                            <strong>Nom complet :</strong> {{ Auth::user()->nom }} {{ Auth::user()->prenoms }}
                         </li>
                         <li class="list-group-item">
                             <strong>Email :</strong> {{ Auth::user()->email }}

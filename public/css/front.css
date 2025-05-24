@@ -81,6 +81,16 @@ body {
     border-color: #0062cc;
 }
 
+.btn-secondary {
+    background-color: #177f3d;
+    border-color: #177f3d;
+}
+
+.btn-secondary:hover {
+    background-color: #146834;
+    border-color: #11562c;
+}
+
 .btn-outline-primary {
     color: #007bff;
     border-color: #007bff;
@@ -99,12 +109,12 @@ body {
 .feature-icon {
     font-size: 2.5rem;
     margin-bottom: 1.5rem;
-    color: #007bff;
+    color: #177f3d;
 }
 
 /* Documents list */
 .document-card {
-    border-left: 4px solid #007bff;
+    border-left: 4px solid #177f3d;
 }
 
 .document-category {
@@ -124,7 +134,7 @@ body {
 }
 
 .badge-approved {
-    background-color: #28a745;
+    background-color: #177f3d;
     color: #fff;
 }
 
@@ -219,12 +229,22 @@ body {
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background-color: #007bff;
+    background-color: #177f3d;
 }
 
 .timeline-content {
     padding: 1rem;
     background-color: #f8f9fa;
     border-radius: 8px;
-    border-left: 4px solid #007bff;
+    border-left: 4px solid #177f3d;
+}
+
+/* Text colors */
+.text-secondary {
+    color: #177f3d !important;
+}
+
+/* Background colors */
+.bg-secondary {
+    background-color: #177f3d !important;
 }

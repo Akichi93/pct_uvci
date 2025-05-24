@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +27,11 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'nic' => ['required', 'string', 'max:50', Rule::unique('users')->ignore($user->id)],
+            'nom' => ['required', 'string', 'max:100'],
+            'prenoms' => ['required', 'string', 'max:155'],
+            'date_naissance' => ['required', 'date', 'before:today'],
+            'genre' => ['required', 'string', 'in:M,F,Autre'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'phone' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string', 'max:255'],
@@ -45,7 +50,11 @@ class ProfileController extends Controller
             $user->profile_photo = $path;
         }
 
-        $user->name = $validated['name'];
+        $user->nic = $validated['nic'];
+        $user->nom = $validated['nom'];
+        $user->prenoms = $validated['prenoms'];
+        $user->date_naissance = $validated['date_naissance'];
+        $user->genre = $validated['genre'];
         $user->email = $validated['email'];
         $user->phone = $validated['phone'];
         $user->address = $validated['address'];

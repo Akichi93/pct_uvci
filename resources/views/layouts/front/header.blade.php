@@ -32,7 +32,7 @@
                 @if (Auth::check())
                     <div class="dropdown">
                         <button class="btn btn-link nav-link dropdown-toggle text-white text-decoration-none" type="button" id="userMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-user-circle me-2"></i>{{ Auth::user()->name }}
+                            <i class="fas fa-user-circle me-2"></i>{{ Auth::user()->nom }} {{ Auth::user()->prenoms }}
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="userMenuButton">
                             <li><a class="dropdown-item" href="{{ url('/dashboard') }}">

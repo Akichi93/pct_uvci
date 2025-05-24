@@ -18,11 +18,48 @@
                             @endif
                             <form id="registerForm" method="POST" action="{{ url('/register') }}">
                                 @csrf
+                                <div class="mb-3">
+                                    <label for="nic" class="form-label">Numéro d'Identité Civile (NIC)</label>
+                                    <input type="text" class="form-control @error('nic') is-invalid @enderror" id="nic" name="nic" value="{{ old('nic') }}" required>
+                                    @error('nic')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                                 <div class="row">
-                                    <div class="col-md-12 mb-3">
-                                        <label for="name" class="form-label">Nom complet</label>
-                                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required autofocus>
-                                        @error('name')
+                                    <div class="col-md-6 mb-3">
+                                        <label for="nom" class="form-label">Nom</label>
+                                        <input type="text" class="form-control @error('nom') is-invalid @enderror" id="nom" name="nom" value="{{ old('nom') }}" required>
+                                        @error('nom')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="prenoms" class="form-label">Prénoms</label>
+                                        <input type="text" class="form-control @error('prenoms') is-invalid @enderror" id="prenoms" name="prenoms" value="{{ old('prenoms') }}" required>
+                                        @error('prenoms')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="date_naissance" class="form-label">Date de naissance</label>
+                                        <input type="date" class="form-control @error('date_naissance') is-invalid @enderror" id="date_naissance" name="date_naissance" value="{{ old('date_naissance') }}" required>
+                                        @error('date_naissance')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="genre" class="form-label">Genre</label>
+                                        <select class="form-select @error('genre') is-invalid @enderror" id="genre" name="genre" required>
+                                            <option value="">Sélectionner...</option>
+                                            <option value="M" {{ old('genre') == 'M' ? 'selected' : '' }}>Masculin</option>
+                                            <option value="F" {{ old('genre') == 'F' ? 'selected' : '' }}>Féminin</option>
+                                            <option value="Autre" {{ old('genre') == 'Autre' ? 'selected' : '' }}>Autre</option>
+                                        </select>
+                                        @error('genre')
                                             <div class="invalid-feedback">{{ $message }}</div>
                                         @enderror
                                     </div>
