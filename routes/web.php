@@ -27,6 +27,8 @@ Route::get('/documents', function () {
     return view('front.documents');
 });
 
+// TODO: Creation de route pour l'ajout des users et leurs connexion ensuite login admin
+
 
 Auth::routes();
 

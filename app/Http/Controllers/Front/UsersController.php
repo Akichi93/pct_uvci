@@ -65,7 +65,6 @@ class UsersController extends Controller
                     Session::put('error_message', $message);
                     return redirect()->back();
                 }
-              
             } else {
                 $message = "Nom d'utilisateur ou mot de passe invalide";
                 Session::flash('error_message', $message);
@@ -82,6 +81,9 @@ class UsersController extends Controller
 
     public function account()
     {
-        return view('front.users.account');
+        //TODO: Recuperation des documents de l'utilisateur
+        return view('front.users.documents');
     }
+
+    //TODO: Pour la demande de documents il faudra verifier si l'utilisateur est connecté ou pas avant de faire la demande s'il est connecte il peut directement dans le cas contraire on le redirige sur la page de connexion
 }

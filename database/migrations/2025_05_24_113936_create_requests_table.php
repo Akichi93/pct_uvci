@@ -19,7 +19,8 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->date('request_date')->nullable();
             $table->date('response_date')->nullable();
-            $table->string('document')->nullable(); // Path to the document if any
+            $table->string('document')->nullable(); 
+            $table->date('deleted_at')->nullable();// Path to the document if any
 
             $table->foreignId('user_id');
             $table->foreignId('admin_id')->nullable();
