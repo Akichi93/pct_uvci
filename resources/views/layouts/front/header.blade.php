@@ -1,4 +1,4 @@
-  <nav class="navbar navbar-expand-lg navbar-dark bg-gradient" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style="background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%) !important;">
     <div class="container py-2">
         <a class="navbar-brand d-flex align-items-center transition-all hover-lift" href="{{ url('/') }}">
             <i class="fas fa-landmark me-2 fa-lg"></i>
@@ -51,10 +51,10 @@
                     </div>
                 @else
                     <div class="d-flex gap-2">
-                        <a href="{{ url('/connexion') }}" class="btn btn-outline-light btn-sm px-3 hover-grow">
+                        <a href="{{ url('/connexion') }}" class="btn btn-outline-light btn-sm px-3 hover-grow" style="border-width: 2px; font-weight: 500;">
                             <i class="fas fa-sign-in-alt me-2"></i>Connexion
                         </a>
-                        <a href="{{ url('/inscription') }}" class="btn btn-light btn-sm px-3 hover-grow">
+                        <a href="{{ url('/inscription') }}" class="btn btn-warning btn-sm px-3 hover-grow text-dark" style="font-weight: 500; background-color: #ffc107;">
                             <i class="fas fa-user-plus me-2"></i>Inscription
                         </a>
                     </div>
@@ -127,5 +127,49 @@
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Styles personnalisés pour les boutons de la navbar */
+.navbar .btn-outline-light {
+    border-color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar .btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.navbar .btn-warning {
+    border: none;
+    color: #2b2b2b;
+}
+
+.navbar .btn-warning:hover {
+    background-color: #ffcd39;
+    color: #000000;
+}
+
+.navbar .nav-link {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar .nav-link:hover {
+    color: #ffffff;
+}
+
+.navbar .dropdown-item {
+    transition: all 0.2s ease;
+}
+
+.navbar .dropdown-item:hover {
+    background-color: #f8f9fa;
+    padding-left: 1.25rem;
+}
+
+.navbar .dropdown-item.text-danger:hover {
+    background-color: #dc3545;
+    color: white !important;
 }
 </style>

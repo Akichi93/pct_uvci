@@ -101,7 +101,9 @@
                     </ul>
                 </div>
                 <div class="card-footer bg-transparent">
-                    <a href="#" class="btn btn-sm btn-outline-primary">Modifier mon profil</a>
+                    <a href="{{ route('profile.edit') }}" class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-user-edit me-2"></i>Modifier mon profil
+                    </a>
                 </div>
             </div>
         </div>

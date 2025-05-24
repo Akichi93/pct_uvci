@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\DocumentController;
 use App\Http\Controllers\Front\RequestController;
+use App\Http\Controllers\Front\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,10 @@ Route::get('/inscription', [HomeController::class, 'register'])->name('register'
 // Routes protégées par authentification
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+
+    // Gestion du profil
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
     // Gestion des documents
     Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
