@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -26,8 +27,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        // Liste tous les utilisateurs pour l'admin
-        $users = User::latest()->get();
+        // Liste tous les utilisateurs pour l'admin avec pagination
+        $users = User::latest()->paginate(15);
         return view('admin.users.index', compact('users'));
     }
 
@@ -45,15 +46,20 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        // Validation des données
+        // Validation des données avec règles renforcées
         $validated = $request->validate([
-            'nom' => 'required|string|max:100',
-            'prenoms' => 'required|string|max:155',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'nom' => 'required|string|max:100|regex:/^[a-zA-ZÀ-ÿ\s\'-]+$/',
+            'prenoms' => 'required|string|max:155|regex:/^[a-zA-ZÀ-ÿ\s\'-]+$/',
+            'email' => 'required|string|email|max:255|unique:users|filter:validate_email',
+            'password' => 'required|string|min:8|confirmed|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/',
             'role' => 'required|string|in:admin,citizen',
-            'phone' => 'nullable|string',
-            'address' => 'nullable|string',
+            'phone' => 'nullable|string|regex:/^[\+]?[0-9\s\-\(\)]+$/|max:20',
+            'address' => 'nullable|string|max:500',
+        ], [
+            'nom.regex' => 'Le nom ne peut contenir que des lettres, espaces, apostrophes et tirets.',
+            'prenoms.regex' => 'Les prénoms ne peuvent contenir que des lettres, espaces, apostrophes et tirets.',
+            'password.regex' => 'Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial.',
+            'phone.regex' => 'Le format du numéro de téléphone n\'est pas valide.',
         ]);
 
         // Créer l'utilisateur
@@ -138,7 +144,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         // Empêcher la suppression de son propre compte
-        if ($user->id === auth()->id()) {
+        if ($user->id === Auth::id()) {
             return redirect()->route('admin.users.index')
                 ->with('error', 'Vous ne pouvez pas supprimer votre propre compte.');
         }

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DocumentController extends Controller
 {
@@ -26,8 +29,8 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        // Liste tous les documents pour l'admin
-        $documents = Document::latest()->get();
+        // Liste tous les documents pour l'admin avec pagination
+        $documents = Document::latest()->paginate(15);
         return view('admin.documents.index', compact('documents'));
     }
 
@@ -45,27 +48,63 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        // Validation des données
+        // Validation renforcée des données
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category' => 'required|string',
-            'file' => 'required|file|mimes:pdf,doc,docx|max:2048',
+            'title' => 'required|string|max:255|regex:/^[a-zA-ZÀ-ÿ0-9\s\-\.\_\(\)]+$/',
+            'description' => 'required|string|max:1000',
+            'category' => 'required|string|in:identite,certificat,permis,autre',
+            'file' => [
+                'required',
+                'file',
+                'mimes:pdf,doc,docx',
+                'max:2048',
+                function ($attribute, $value, $fail) {
+                    // Vérification du type MIME réel
+                    $allowedMimes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                    if (!in_array($value->getMimeType(), $allowedMimes)) {
+                        $fail('Le type de fichier n\'est pas autorisé.');
+                    }
+
+                    // Vérification de l'extension réelle
+                    $allowedExtensions = ['pdf', 'doc', 'docx'];
+                    if (!in_array(strtolower($value->getClientOriginalExtension()), $allowedExtensions)) {
+                        $fail('L\'extension du fichier n\'est pas autorisée.');
+                    }
+                }
+            ],
             'status' => 'required|in:active,inactive',
             'is_public' => 'sometimes|boolean',
+        ], [
+            'title.regex' => 'Le titre ne peut contenir que des lettres, chiffres, espaces et caractères de base.',
+            'description.max' => 'La description ne peut pas dépasser 1000 caractères.',
+            'category.in' => 'La catégorie sélectionnée n\'est pas valide.',
+            'file.mimes' => 'Le fichier doit être au format PDF, DOC ou DOCX.',
+            'file.max' => 'Le fichier ne peut pas dépasser 2 Mo.',
         ]);
 
-        // Gestion du fichier
+        // Gestion sécurisée du fichier
         if ($request->hasFile('file')) {
-            $filePath = $request->file('file')->store('documents', 'public');
+            $file = $request->file('file');
+
+            // Génération d'un nom unique sécurisé
+            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('documents', $filename, 'public');
             $validated['file_path'] = $filePath;
         }
 
         // Gestion du champ is_public qui est une checkbox
         $validated['is_public'] = $request->has('is_public') ? true : false;
 
-        // Création du document
+        // Création du document avec logging
         $document = Document::create($validated);
+
+        // Log de l'action pour audit
+        Log::info('Document créé', [
+            'document_id' => $document->id,
+            'user_id' => Auth::id(),
+            'title' => $document->title,
+            'category' => $document->category
+        ]);
 
         return redirect()->route('admin.documents.index')
             ->with('success', 'Document créé avec succès.');
@@ -96,36 +135,77 @@ class DocumentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // Validation des données
+        // Validation renforcée des données
         $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'category' => 'required|string',
-            'file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
+            'title' => 'required|string|max:255|regex:/^[a-zA-ZÀ-ÿ0-9\s\-\.\_\(\)]+$/',
+            'description' => 'required|string|max:1000',
+            'category' => 'required|string|in:identite,certificat,permis,autre',
+            'file' => [
+                'nullable',
+                'file',
+                'mimes:pdf,doc,docx',
+                'max:2048',
+                function ($attribute, $value, $fail) {
+                    if ($value) {
+                        // Vérification du type MIME réel
+                        $allowedMimes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                        if (!in_array($value->getMimeType(), $allowedMimes)) {
+                            $fail('Le type de fichier n\'est pas autorisé.');
+                        }
+
+                        // Vérification de l'extension réelle
+                        $allowedExtensions = ['pdf', 'doc', 'docx'];
+                        if (!in_array(strtolower($value->getClientOriginalExtension()), $allowedExtensions)) {
+                            $fail('L\'extension du fichier n\'est pas autorisée.');
+                        }
+                    }
+                }
+            ],
             'is_public' => 'boolean',
             'status' => 'required|in:active,inactive',
+        ], [
+            'title.regex' => 'Le titre ne peut contenir que des lettres, chiffres, espaces et caractères de base.',
+            'description.max' => 'La description ne peut pas dépasser 1000 caractères.',
+            'category.in' => 'La catégorie sélectionnée n\'est pas valide.',
+            'file.mimes' => 'Le fichier doit être au format PDF, DOC ou DOCX.',
+            'file.max' => 'Le fichier ne peut pas dépasser 2 Mo.',
         ]);
 
         // Récupérer le document
         $document = Document::findOrFail($id);
+        $oldFilePath = $document->file_path;
 
         // Mettre à jour le fichier si fourni
         if ($request->hasFile('file')) {
-            // Supprimer l'ancien fichier
-            Storage::disk('public')->delete($document->file_path);
+            $file = $request->file('file');
 
-            // Enregistrer le nouveau fichier
-            $filePath = $request->file('file')->store('documents', 'public');
+            // Génération d'un nom unique sécurisé
+            $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('documents', $filename, 'public');
+
+            // Supprimer l'ancien fichier de manière sécurisée
+            if ($oldFilePath && Storage::disk('public')->exists($oldFilePath)) {
+                Storage::disk('public')->delete($oldFilePath);
+            }
+
             $document->file_path = $filePath;
         }
 
         // Mettre à jour les autres champs
-        $document->title = $request->title;
-        $document->description = $request->description;
-        $document->category = $request->category;
+        $document->title = $validated['title'];
+        $document->description = $validated['description'];
+        $document->category = $validated['category'];
         $document->is_public = $request->has('is_public');
-        $document->status = $request->status;
+        $document->status = $validated['status'];
         $document->save();
+
+        // Log de l'action pour audit
+        Log::info('Document mis à jour', [
+            'document_id' => $document->id,
+            'user_id' => Auth::id(),
+            'title' => $document->title,
+            'changes' => $document->getChanges()
+        ]);
 
         return redirect()->route('admin.documents.index')
             ->with('success', 'Document mis à jour avec succès.');

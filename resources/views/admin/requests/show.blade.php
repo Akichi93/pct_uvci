@@ -80,7 +80,7 @@
                                             <div class="form-group">
                                                 <label class="form-control-label">Pièces jointes</label>
                                                 <div class="list-group mt-2">
-                                                    @foreach(json_decode($request->attachments) as $attachment)
+                                                    @foreach($request->attachments as $attachment)
                                                     <a href="{{ Storage::url($attachment) }}" class="list-group-item list-group-item-action" target="_blank">
                                                         <i class="fas fa-paperclip me-2"></i>{{ basename($attachment) }}
                                                     </a>
@@ -116,12 +116,18 @@
                                             <i class="fas fa-file-alt fa-3x text-primary"></i>
                                         </div>
                                         <div>
-                                            <h5>{{ $request->document->title }}</h5>
-                                            <p class="text-sm mb-0">Catégorie: <span class="badge bg-primary">{{ $request->document->category }}</span></p>
-                                            <p class="text-sm mb-2">{{ Str::limit($request->document->description, 150) }}</p>
-                                            <a href="{{ route('admin.documents.show', $request->document->id) }}" class="btn btn-sm btn-outline-primary">
-                                                <i class="fas fa-eye me-1"></i> Voir le document
-                                            </a>
+                                            @if($request->document)
+                                                <h5>{{ $request->document->title }}</h5>
+                                                <p class="text-sm mb-0">Catégorie: <span class="badge bg-primary">{{ $request->document->category }}</span></p>
+                                                <p class="text-sm mb-2">{{ Str::limit($request->document->description, 150) }}</p>
+                                                <a href="{{ route('admin.documents.show', $request->document->id) }}" class="btn btn-sm btn-outline-primary">
+                                                    <i class="fas fa-eye me-1"></i> Voir le document
+                                                </a>
+                                            @else
+                                                <h5 class="text-muted">Document non spécifié</h5>
+                                                <p class="text-sm mb-0">Catégorie: <span class="badge bg-secondary">Non définie</span></p>
+                                                <p class="text-sm mb-2">Aucun document associé à cette demande.</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

@@ -1,6 +1,6 @@
-<header class="navbar navbar-expand-md navbar-dark bg-primary sticky-top">
+<header class="navbar navbar-expand-md navbar-dark bg-primary">
     <div class="container-fluid">
-        <button class="navbar-toggler d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler d-md-none" type="button" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="{{ route('admin.dashboard') }}">PCT-UVCI Admin</a>

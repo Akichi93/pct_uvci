@@ -16,11 +16,12 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form id="loginForm" method="POST" action="{{ route('login') }}">
+                            <form id="loginForm" method="POST" action="{{ route('login.post') }}">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required autofocus>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                           id="email" name="email" value="{{ old('email') }}" required autofocus>
                                     @error('email')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror

@@ -75,13 +75,20 @@
             </div>
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <h5>{{ $request->document->title }}</h5>
-                        <p class="text-muted mb-0">Vous pouvez télécharger ce document</p>
-                    </div>
-                    <a href="{{ asset('storage/' . $request->document->file_path) }}" class="btn btn-success" target="_blank">
-                        <i class="fas fa-file-download me-2"></i>Télécharger le document
-                    </a>
+                    @if($request->document)
+                        <div>
+                            <h5>{{ $request->document->title }}</h5>
+                            <p class="text-muted mb-0">Vous pouvez télécharger ce document</p>
+                        </div>
+                        <a href="{{ asset('storage/' . $request->document->file_path) }}" class="btn btn-success" target="_blank">
+                            <i class="fas fa-file-download me-2"></i>Télécharger le document
+                        </a>
+                    @else
+                        <div>
+                            <h5 class="text-muted">Aucun document associé</h5>
+                            <p class="text-muted mb-0">Aucun document n'est associé à cette demande</p>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

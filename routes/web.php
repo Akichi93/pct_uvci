@@ -23,6 +23,21 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/connexion', [HomeController::class, 'login'])->name('login');
 Route::get('/inscription', [HomeController::class, 'register'])->name('register');
 
+// Routes d'authentification personnalisées
+Route::post('/connexion', [HomeController::class, 'authenticate'])->name('login.post');
+Route::post('/inscription', [HomeController::class, 'store'])->name('register.post');
+Route::post('/logout', [HomeController::class, 'logout'])->name('logout');
+
+// Route de réinitialisation mot de passe simple
+Route::get('/mot-de-passe-oublie', function() {
+    return view('front.forgot-password');
+})->name('password.request');
+
+// Routes protégées pour les utilisateurs connectés
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+});
+
 // Admin test route directly in web.php
 Route::get('/admin-test', function() {
     return redirect('/admin/dashboard');
@@ -84,5 +99,5 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     });
 });
 
-// Routes d'authentification Laravel
-Auth::routes();
+// Routes d'authentification Laravel personnalisées
+// Auth::routes(); // Désactivées car nous utilisons nos propres routes

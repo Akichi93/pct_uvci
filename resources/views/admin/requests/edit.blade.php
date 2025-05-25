@@ -104,9 +104,15 @@
                             <i class="fas fa-file-alt fa-3x text-primary"></i>
                         </div>
                         <div>
-                            <h5>{{ $request->document->title }}</h5>
-                            <p class="text-sm mb-0">Catégorie: <span class="badge bg-primary">{{ $request->document->category }}</span></p>
-                            <p class="text-sm mb-2">{{ Str::limit($request->document->description, 100) }}</p>
+                            @if($request->document)
+                                <h5>{{ $request->document->title }}</h5>
+                                <p class="text-sm mb-0">Catégorie: <span class="badge bg-primary">{{ $request->document->category }}</span></p>
+                                <p class="text-sm mb-2">{{ Str::limit($request->document->description, 100) }}</p>
+                            @else
+                                <h5 class="text-muted">Document non spécifié</h5>
+                                <p class="text-sm mb-0">Catégorie: <span class="badge bg-secondary">Non définie</span></p>
+                                <p class="text-sm mb-2">Aucun document associé à cette demande.</p>
+                            @endif
                         </div>
                     </div>
                 </div>

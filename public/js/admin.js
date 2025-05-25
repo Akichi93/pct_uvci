@@ -30,4 +30,36 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
         }
     });
+
+    // Mobile sidebar toggle functionality
+    function initializeMobileSidebar() {
+        const toggleButton = document.querySelector('.navbar-toggler');
+        const sidebar = document.getElementById('sidebarMenu');
+
+        if (toggleButton && sidebar) {
+            toggleButton.addEventListener('click', function() {
+                sidebar.classList.toggle('show');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            document.addEventListener('click', function(event) {
+                if (window.innerWidth <= 767.98 &&
+                    sidebar.classList.contains('show') &&
+                    !sidebar.contains(event.target) &&
+                    !toggleButton.contains(event.target)) {
+                    sidebar.classList.remove('show');
+                }
+            });
+
+            // Close sidebar when window is resized to desktop
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 767.98) {
+                    sidebar.classList.remove('show');
+                }
+            });
+        }
+    }
+
+    // Initialize mobile sidebar
+    initializeMobileSidebar();
 });

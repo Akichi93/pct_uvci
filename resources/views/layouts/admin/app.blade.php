@@ -15,11 +15,8 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Custom Admin CSS -->
-    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
-
-    <!-- Custom Color Overrides -->
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <!-- Optimized Application CSS -->
+    <link href="{{ asset('css/app-optimized.css') }}" rel="stylesheet">
 
     @yield('styles')
 </head>
