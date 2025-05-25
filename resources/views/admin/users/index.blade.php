@@ -37,7 +37,7 @@
                                                 <i class="fas fa-user-circle text-primary opacity-10 fa-2x me-3"></i>
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $user->name }}</h6>
+                                                <h6 class="mb-0 text-sm">{{ $user->nom }} {{ $user->prenoms }}</h6>
                                                 <p class="text-xs text-secondary mb-0">{{ $user->email }}</p>
                                             </div>
                                         </div>
@@ -53,7 +53,7 @@
                                         <span class="text-secondary text-xs font-weight-bold">{{ $user->requests->count() }}</span>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->created_at->format('d/m/Y') }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $user->created_at ? $user->created_at->format('d/m/Y') : 'N/A' }}</span>
                                     </td>
                                     <td class="align-middle">
                                         <div class="btn-group" role="group">

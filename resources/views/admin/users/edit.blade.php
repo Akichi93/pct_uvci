@@ -14,13 +14,24 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="name" class="form-control-label">Nom complet</label>
-                                    <input class="form-control @error('name') is-invalid @enderror" type="text" id="name" name="name" value="{{ old('name', $user->name) }}" required>
-                                    @error('name')
+                                    <label for="nom" class="form-control-label">Nom</label>
+                                    <input class="form-control @error('nom') is-invalid @enderror" type="text" id="nom" name="nom" value="{{ old('nom', $user->nom) }}" required>
+                                    @error('nom')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="prenoms" class="form-control-label">Prénoms</label>
+                                    <input class="form-control @error('prenoms') is-invalid @enderror" type="text" id="prenoms" name="prenoms" value="{{ old('prenoms', $user->prenoms) }}" required>
+                                    @error('prenoms')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="email" class="form-control-label">Email</label>

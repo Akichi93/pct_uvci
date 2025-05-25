@@ -16,16 +16,43 @@ class RequestController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        // Nous appliquons déjà ce middleware au niveau des routes
+        // donc nous n'avons pas besoin de l'appliquer ici
+        // $this->middleware('admin');
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Liste toutes les demandes pour l'admin
-        $requests = CitizenRequest::with(['user', 'document'])->latest()->get();
+        // Liste toutes les demandes pour l'admin avec pagination
+        $query = CitizenRequest::with(['user', 'document'])->latest();
+
+        // Filtrer par statut si présent dans la requête
+        if ($request->has('status') && !empty($request->status)) {
+            $query->where('status', $request->status);
+        }
+
+        // Recherche si présente dans la requête
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('reference_number', 'like', "%{$search}%")
+                  ->orWhereHas('user', function($subQuery) use ($search) {
+                      $subQuery->where('nom', 'like', "%{$search}%")
+                              ->orWhere('prenoms', 'like', "%{$search}%")
+                              ->orWhere('email', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('document', function($subQuery) use ($search) {
+                      $subQuery->where('title', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        // Paginer les résultats (15 par page)
+        $requests = $query->paginate(15);
+
         return view('admin.requests.index', compact('requests'));
     }
 

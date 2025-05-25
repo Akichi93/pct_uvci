@@ -1,0 +1,58 @@
+/* Custom styles for the secondary color */
+.btn-secondary {
+    background-color: #177f3d;
+    border-color: #177f3d;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+    background-color: #146834 !important;
+    border-color: #11562c !important;
+}
+
+.text-secondary,
+.text-secondary-emphasis {
+    color: #177f3d !important;
+}
+
+.bg-secondary {
+    background-color: #177f3d !important;
+}
+
+.border-secondary {
+    border-color: #177f3d !important;
+}
+
+/* Admin sidebar styles */
+.sidebar .nav-link.active {
+    color: #177f3d;
+}
+
+.sidebar .nav-link:hover {
+    color: #146834;
+}
+
+/* For progress bars and other elements */
+.progress-bar-secondary {
+    background-color: #177f3d;
+}
+
+/* For modal and dialog buttons */
+.btn-close-secondary {
+    color: #177f3d;
+}
+
+/* For pagination */
+.page-link {
+    color: #177f3d;
+}
+
+.page-item.active .page-link {
+    background-color: #177f3d;
+    border-color: #177f3d;
+}
+
+.page-link:hover {
+    color: #146834;
+}

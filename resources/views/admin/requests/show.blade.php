@@ -55,13 +55,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Date de création</label>
-                                                <p class="form-control-static">{{ $request->created_at->format('d/m/Y H:i') }}</p>
+                                                <p class="form-control-static">{{ $request->created_at ? $request->created_at->format('d/m/Y H:i') : 'N/A' }}</p>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="form-control-label">Dernière mise à jour</label>
-                                                <p class="form-control-static">{{ $request->updated_at->format('d/m/Y H:i') }}</p>
+                                                <p class="form-control-static">{{ $request->updated_at ? $request->updated_at->format('d/m/Y H:i') : 'N/A' }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@
                                             <i class="fas fa-user-circle fa-3x text-info"></i>
                                         </div>
                                         <div>
-                                            <h5 class="mb-0">{{ $request->user->name }}</h5>
+                                            <h5 class="mb-0">{{ $request->user->nom }} {{ $request->user->prenoms }}</h5>
                                             <p class="text-xs text-secondary mb-0">{{ $request->user->email }}</p>
                                         </div>
                                     </div>
@@ -170,7 +170,7 @@
                                             <i class="fas fa-calendar-alt"></i>
                                         </div>
                                         <div>
-                                            <p class="text-sm mb-0">Membre depuis {{ $request->user->created_at->format('d/m/Y') }}</p>
+                                            <p class="text-sm mb-0">Membre depuis {{ $request->user->created_at ? $request->user->created_at->format('d/m/Y') : 'N/A' }}</p>
                                         </div>
                                     </div>
 

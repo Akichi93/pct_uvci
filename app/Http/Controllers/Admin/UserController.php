@@ -16,7 +16,9 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        // Nous appliquons déjà ce middleware au niveau des routes
+        // donc nous n'avons pas besoin de l'appliquer ici
+        // $this->middleware('admin');
     }
 
     /**
@@ -45,17 +47,19 @@ class UserController extends Controller
     {
         // Validation des données
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'nom' => 'required|string|max:100',
+            'prenoms' => 'required|string|max:155',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required|string|in:admin,user',
+            'role' => 'required|string|in:admin,citizen',
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
         ]);
 
         // Créer l'utilisateur
         User::create([
-            'name' => $request->name,
+            'nom' => $request->nom,
+            'prenoms' => $request->prenoms,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
@@ -94,9 +98,10 @@ class UserController extends Controller
     {
         // Validation des données
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
+            'nom' => 'required|string|max:100',
+            'prenoms' => 'required|string|max:155',
             'email' => 'required|string|email|max:255|unique:users,email,'.$id,
-            'role' => 'required|string|in:admin,user',
+            'role' => 'required|string|in:admin,citizen',
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
             'password' => 'nullable|string|min:8|confirmed',
@@ -106,7 +111,8 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         // Mettre à jour les champs
-        $user->name = $request->name;
+        $user->nom = $request->nom;
+        $user->prenoms = $request->prenoms;
         $user->email = $request->email;
         $user->role = $request->role;
         $user->phone = $request->phone;

@@ -113,11 +113,11 @@
                                         <div class="d-flex px-2 py-1">
                                             <div>
                                                 <div class="avatar avatar-sm me-3 bg-gradient-primary rounded-circle">
-                                                    <span class="text-white text-xs">{{ substr($request->user->name, 0, 1) }}</span>
+                                                    <span class="text-white text-xs">{{ substr($request->user->nom, 0, 1) }}</span>
                                                 </div>
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">{{ $request->user->name }}</h6>
+                                                <h6 class="mb-0 text-sm">{{ $request->user->nom }} {{ $request->user->prenoms }}</h6>
                                                 <p class="text-xs text-secondary mb-0">{{ $request->user->email }}</p>
                                             </div>
                                         </div>
@@ -135,7 +135,7 @@
                                         @endif
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $request->created_at->format('d/m/Y') }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $request->created_at ? $request->created_at->format('d/m/Y') : 'N/A' }}</span>
                                     </td>
                                     <td class="align-middle">
                                         <a href="{{ route('admin.requests.show', $request->id) }}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Voir détails">

@@ -18,6 +18,9 @@
     <!-- Custom Admin CSS -->
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
+    <!-- Custom Color Overrides -->
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+
     @yield('styles')
 </head>
 <body>

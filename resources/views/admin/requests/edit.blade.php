@@ -123,7 +123,7 @@
                             <i class="fas fa-user-circle fa-3x text-info"></i>
                         </div>
                         <div>
-                            <h5>{{ $request->user->name }}</h5>
+                            <h5>{{ $request->user->nom }} {{ $request->user->prenoms }}</h5>
                             <p class="text-sm mb-0">Email: {{ $request->user->email }}</p>
                             @if($request->user->phone)
                             <p class="text-sm mb-0">Téléphone: {{ $request->user->phone }}</p>

@@ -16,7 +16,9 @@ class DocumentController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('admin');
+        // Nous appliquons déjà ce middleware au niveau des routes
+        // donc nous n'avons pas besoin de l'appliquer ici
+        // $this->middleware('admin');
     }
 
     /**

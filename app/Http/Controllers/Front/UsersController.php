@@ -25,7 +25,8 @@ class UsersController extends Controller
                 return redirect()->back();
             } else {
                 $user = new User;
-                $user->name = $data['name'];
+                $user->nom = $data['nom'];
+                $user->prenoms = $data['prenoms'];
                 $user->mobile = $data['mobile'];
                 $user->email = $data['email'];
                 $user->password = bcrypt($data['password']);
@@ -36,7 +37,8 @@ class UsersController extends Controller
                 $email = $data['email'];
                 $messageData = [
                     'email' => $data['email'],
-                    'name' => $data['name'],
+                    'nom' => $data['nom'],
+                    'prenoms' => $data['prenoms'],
                     'code' => base64_encode($data['email'])
                 ];
                 Mail::send('emails.confirmation', $messageData, function ($message) use ($email) {
@@ -65,7 +67,7 @@ class UsersController extends Controller
                     Session::put('error_message', $message);
                     return redirect()->back();
                 }
-              
+
             } else {
                 $message = "Nom d'utilisateur ou mot de passe invalide";
                 Session::flash('error_message', $message);

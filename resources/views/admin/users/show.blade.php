@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="card-body pt-0">
                                     <div class="text-center mt-2">
-                                        <h5>{{ $user->name }}</h5>
+                                        <h5>{{ $user->nom }} {{ $user->prenoms }}</h5>
                                         <div class="h6 font-weight-300">
                                             <i class="fas fa-envelope me-2"></i>{{ $user->email }}
                                         </div>
@@ -53,7 +53,7 @@
                                         </div>
                                         <div class="d-flex justify-content-between mb-2">
                                             <span class="text-sm">Inscription:</span>
-                                            <span class="text-sm font-weight-bold">{{ $user->created_at->format('d/m/Y') }}</span>
+                                            <span class="text-sm font-weight-bold">{{ $user->created_at ? $user->created_at->format('d/m/Y') : 'N/A' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -68,34 +68,28 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-control-label">Nom complet</label>
-                                                <p class="form-control-static">{{ $user->name }}</p>
+                                                <label class="form-control-label">Nom</label>
+                                                <p class="form-control-static">{{ $user->nom }}</p>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-control-label">Email</label>
-                                                <p class="form-control-static">{{ $user->email }}</p>
+                                                <label class="form-control-label">Prénoms</label>
+                                                <p class="form-control-static">{{ $user->prenoms }}</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-control-label">Téléphone</label>
-                                                <p class="form-control-static">{{ $user->phone ?? 'Non renseigné' }}</p>
+                                                <label class="form-control-label">Email</label>
+                                                <p class="form-control-static">{{ $user->email }}</p>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label class="form-control-label">Rôle</label>
-                                                <p class="form-control-static">
-                                                    @if($user->role === 'admin')
-                                                        <span class="badge bg-danger">Administrateur</span>
-                                                    @else
-                                                        <span class="badge bg-info">Citoyen</span>
-                                                    @endif
-                                                </p>
+                                                <label class="form-control-label">Téléphone</label>
+                                                <p class="form-control-static">{{ $user->phone ?? 'Non renseigné' }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -151,7 +145,7 @@
                                                         @endif
                                                     </td>
                                                     <td class="align-middle text-center">
-                                                        <span class="text-secondary text-xs font-weight-bold">{{ $request->created_at->format('d/m/Y') }}</span>
+                                                        <span class="text-secondary text-xs font-weight-bold">{{ $request->created_at ? $request->created_at->format('d/m/Y') : 'N/A' }}</span>
                                                     </td>
                                                     <td class="align-middle">
                                                         <a href="{{ route('admin.requests.show', $request->id) }}" class="btn btn-info btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir">

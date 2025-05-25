@@ -52,8 +52,8 @@
                             </div>
                             <div class="mb-4">
                                 <h6 class="text-uppercase text-body text-xs font-weight-bolder">Dates:</h6>
-                                <p class="text-sm mb-1">Créé le: {{ $document->created_at->format('d/m/Y H:i') }}</p>
-                                <p class="text-sm">Dernière mise à jour: {{ $document->updated_at->format('d/m/Y H:i') }}</p>
+                                <p class="text-sm mb-1">Créé le: {{ $document->created_at ? $document->created_at->format('d/m/Y H:i') : 'N/A' }}</p>
+                                <p class="text-sm">Dernière mise à jour: {{ $document->updated_at ? $document->updated_at->format('d/m/Y H:i') : 'N/A' }}</p>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -126,7 +126,7 @@
                                                                 <i class="fas fa-user text-secondary opacity-10 fa-lg me-3"></i>
                                                             </div>
                                                             <div class="d-flex flex-column justify-content-center">
-                                                                <h6 class="mb-0 text-sm">{{ $request->user->name }}</h6>
+                                                                <h6 class="mb-0 text-sm">{{ $request->user->nom }} {{ $request->user->prenoms }}</h6>
                                                                 <p class="text-xs text-secondary mb-0">{{ $request->user->email }}</p>
                                                             </div>
                                                         </div>
@@ -143,7 +143,7 @@
                                                         @endif
                                                     </td>
                                                     <td class="align-middle text-center">
-                                                        <span class="text-secondary text-xs font-weight-bold">{{ $request->created_at->format('d/m/Y') }}</span>
+                                                        <span class="text-secondary text-xs font-weight-bold">{{ $request->created_at ? $request->created_at->format('d/m/Y') : 'N/A' }}</span>
                                                     </td>
                                                     <td class="align-middle">
                                                         <a href="{{ route('admin.requests.show', $request->id) }}" class="btn btn-info btn-sm me-1" data-bs-toggle="tooltip" data-bs-placement="top" title="Voir">

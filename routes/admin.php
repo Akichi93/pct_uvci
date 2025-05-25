@@ -17,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Test route to check if admin routes are loading
+Route::get('/test', function() {
+    return 'Admin route test works!';
+});
+
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

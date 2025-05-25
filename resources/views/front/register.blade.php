@@ -16,7 +16,7 @@
                                     </ul>
                                 </div>
                             @endif
-                            <form id="registerForm" method="POST" action="{{ url('/register') }}">
+                            <form id="registerForm" method="POST" action="{{ route('register') }}">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="nic" class="form-label">Numéro d'Identité Civile (NIC)</label>
@@ -122,7 +122,7 @@
                                 </div>
 
                                 <div class="d-grid">
-                                    <button type="submit" class="btn btn-primary">S'inscrire</button>
+                                    <button type="submit" class="btn btn-secondary">S'inscrire</button>
                                 </div>
                             </form>
 

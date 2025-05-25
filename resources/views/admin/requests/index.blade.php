@@ -54,7 +54,7 @@
                                         <p class="text-xs text-secondary mb-0">{{ $request->document->category }}</p>
                                     </td>
                                     <td>
-                                        <p class="text-xs font-weight-bold mb-0">{{ $request->user->name }}</p>
+                                        <p class="text-xs font-weight-bold mb-0">{{ $request->user->nom }} {{ $request->user->prenoms }}</p>
                                         <p class="text-xs text-secondary mb-0">{{ $request->user->email }}</p>
                                     </td>
                                     <td class="align-middle text-center text-sm">
@@ -69,7 +69,7 @@
                                         @endif
                                     </td>
                                     <td class="align-middle text-center">
-                                        <span class="text-secondary text-xs font-weight-bold">{{ $request->created_at->format('d/m/Y') }}</span>
+                                        <span class="text-secondary text-xs font-weight-bold">{{ $request->created_at ? $request->created_at->format('d/m/Y') : 'N/A' }}</span>
                                     </td>
                                     <td class="align-middle">
                                         <div class="btn-group" role="group">
