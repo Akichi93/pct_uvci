@@ -18,9 +18,17 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'nic',
+        'nom',
+        'prenoms',
+        'date_naissance',
+        'genre',
         'email',
         'password',
+        'role',
+        'phone',
+        'address',
+        'profile_photo',
     ];
 
     /**
@@ -44,5 +52,23 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Check if user is an admin
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Get all requests made by the user
+     */
+    public function requests()
+    {
+        return $this->hasMany(CitizenRequest::class);
     }
 }

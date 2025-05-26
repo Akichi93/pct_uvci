@@ -4,7 +4,11 @@
         <div class="container text-center">
             <h1 class="display-4">Plateforme de Documents Administratifs</h1>
             <p class="lead">Gérez toutes vos demandes administratives en ligne</p>
-            <a href="{{ url('/requests') }}" class="btn btn-primary btn-lg mt-3">Faire une demande</a>
+            @auth
+                <a href="{{ url('/requests') }}" class="btn btn-primary btn-lg mt-3">Faire une demande</a>
+            @else
+                <a href="{{ url('/connexion') }}" class="btn btn-primary btn-lg mt-3">Connectez-vous pour faire une demande</a>
+            @endauth
         </div>
     </section>
 
